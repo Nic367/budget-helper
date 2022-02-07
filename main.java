@@ -10,10 +10,9 @@ public class main extends JFrame implements ActionListener{
     public static final int WIDTH = 800;
     public static final int HEIGHT = 400;
     
-    private int qsPos = 0;
-    private JTextField qsIoField;
-    private int a, b, c, d, ee, f, g, h, i;
-    private Vector<String> questions = new Vector<String>();
+    private JTextField hourlyIoField, hoursIoField, salaryIoField, debtIoField, debtPayIoField, qsIoField;  //TODO: remove last
+    private JRadioButton aButton, bButton;  //TODO: rename these to their proper names
+    private JCheckBox cButton;
     
     public static void main(String[] args){
         main t1 = new main();
@@ -22,69 +21,49 @@ public class main extends JFrame implements ActionListener{
     }
     
     public main(){
-        //TODO: Bug! find a way to randomize answers so that A isnt always lawful good etc etc
-        setTitle("Alignment Tree");
+        setTitle("Budget Helper");
         setDefaultCloseOperation(EXIT_ON_CLOSE);    /*instead of WindowDestroyer*/
         setSize(WIDTH, HEIGHT);                     /*instead of "t1.pack();" in main*/
         
         Container contentPane = getContentPane();
         contentPane.setLayout(new GridLayout(1,1));
         
-//TITLE PAGE
-		//X
-
-//INFO PAGE
-		//X
-
-//QUESTION PAGE
-		questions.add("FIRST QUESTION");
-		questions.add("SECOND QUESTION");
-		questions.add("THIRD QUESTION");
-		
-		JPanel qsPanel = new JPanel();
-        qsPanel.setLayout(new GridLayout(2,1));		/*row, col*/
+//SETTINGS PAGE		
+		JPanel settingsPanel = new JPanel();                /*filled row by row, and from left to right*/
+        settingsPanel.setLayout(new GridLayout(2,3));		/*row, col*/
         //TEXT PANEL
-		    JPanel qsTextPanel = new JPanel();
-		    qsTextPanel.setLayout(new BorderLayout());
-		    qsIoField = new JTextField();				/*defined private*/
-		    qsIoField.setText(questions.get(qsPos));
-		    qsIoField.setBackground(Color.white);
+		JPanel qsTextPanel = new JPanel();
+		qsTextPanel.setLayout(new BorderLayout());
+		qsIoField = new JTextField();				        /*defined private*/
+		qsIoField.setBackground(Color.white);
         //ADD TO TEXT PANEL
-		    qsTextPanel.add(qsIoField, BorderLayout.CENTER);
+		qsTextPanel.add(qsIoField, BorderLayout.CENTER);
 		//BUTTON PANEL
-		    JPanel qsButtonsPanel = new JPanel();
-		    qsButtonsPanel.setLayout(new GridLayout(3,3));
-		    JButton aButton = new JButton("A"+"0X");
-		    JButton bButton = new JButton("B");
-		    JButton cButton = new JButton("C");
-		    JButton dButton = new JButton("D");
-		    JButton eButton = new JButton("E");
-		    JButton fButton = new JButton("F");
-		    JButton gButton = new JButton("G");
-		    JButton hButton = new JButton("H");
-		    JButton iButton = new JButton("I");
-		    aButton.addActionListener(this);
-		    bButton.addActionListener(this);
-		    cButton.addActionListener(this);
-		    dButton.addActionListener(this);
-		    eButton.addActionListener(this);
-		    fButton.addActionListener(this);
-		    gButton.addActionListener(this);
-		    hButton.addActionListener(this);
-		    iButton.addActionListener(this);
+		JPanel qsButtonsPanel = new JPanel();
+		qsButtonsPanel.setLayout(new FlowLayout());
+		
+		aButton = new JRadioButton("Hourly");
+        bButton = new JRadioButton("Salary");
+        bButton.setSelected(true);
+        
+        cButton = new JCheckBox("Debt");
+        cButton.setSelected(false);
+        
+		
+		aButton.addActionListener(this);
+		bButton.addActionListener(this);
+		cButton.addActionListener(this);
 		//ADD TO BUTTON PANEL
-		    qsButtonsPanel.add(aButton);
-		    qsButtonsPanel.add(bButton);
-		    qsButtonsPanel.add(cButton);
-		    qsButtonsPanel.add(dButton);
-		    qsButtonsPanel.add(eButton);
-		    qsButtonsPanel.add(fButton);
-		    qsButtonsPanel.add(gButton);
-		    qsButtonsPanel.add(hButton);
-		    qsButtonsPanel.add(iButton);
+		qsButtonsPanel.add(aButton);
+		qsButtonsPanel.add(bButton);
+		qsButtonsPanel.add(cButton);
+		
+		
 //ADD TO QUESTION PAGE
-        qsPanel.add(qsTextPanel);
-        qsPanel.add(qsButtonsPanel);
+        settingsPanel.add(qsTextPanel);
+        settingsPanel.add(qsButtonsPanel);
+        
+        
         
         
         
@@ -96,47 +75,23 @@ public class main extends JFrame implements ActionListener{
         
         
         //ADD PAGES/PANELS TO CONTENT PANE
-        contentPane.add(qsPanel);
-    }
-    
-    public void updateQsIoField(){
-    	if(qsPos<questions.size()){
-    		qsIoField.setText(questions.get(qsPos));
-    	}else
-    		qsIoField.setText(qsPos+" > number of questions");
+        contentPane.add(settingsPanel);
     }
     
     public void actionPerformed(ActionEvent e){
-        if(e.getActionCommand().equals("A")){
-        	//qsIoField.setText("A");
-        	a++;
-        }else if(e.getActionCommand().equals("B")){
-        	qsIoField.setText("B");
-        	b++;
-        }else if(e.getActionCommand().equals("C")){
-        	qsIoField.setText("C");
-        	c++;
-        }else if(e.getActionCommand().equals("D")){
+        if(e.getActionCommand().equals("Hourly") || e.getActionCommand().equals("Salary")){
+            if(e.getActionCommand().equals("Hourly")){
+            	aButton.setSelected(true);
+            	bButton.setSelected(false);
+            }else{
+                aButton.setSelected(false);
+            	bButton.setSelected(true);
+            }
+        }
+        
+        if(e.getActionCommand().equals("D")){
         	qsIoField.setText("D");
-        	d++;
-        }else if(e.getActionCommand().equals("E")){
-        	qsIoField.setText("E");
-        	ee++;
-        }else if(e.getActionCommand().equals("F")){
-        	qsIoField.setText("F");
-        	f++;
-        }else if(e.getActionCommand().equals("G")){
-        	qsIoField.setText("G");
-        	g++;
-        }else if(e.getActionCommand().equals("H")){
-        	qsIoField.setText("H");
-        	h++;
-        }else if(e.getActionCommand().equals("I")){
-        	qsIoField.setText("I");
-        	i++;
         }else 
             qsIoField.setText("That's an L, try again.");
-        qsPos++;
-        updateQsIoField();
     }
 }
