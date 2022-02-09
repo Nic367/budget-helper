@@ -34,7 +34,219 @@
 ===============================================================================================================================================================
 ===============================================================================================================================================================
 ===============================================================================================================================================================
+NOTE - Lets put this on hold and create a log in first!
+
+import java.awt.*;
+import java.util.*;
+import javax.swing.*;
+import java.awt.event.*;
+
+public class main extends JFrame implements ActionListener{
+    //javac *.java
+    //java main
+    
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 400;
+    
+    private JTextField hourlyIoField, hoursIoField, fixedIoField, debtIoField, debtPayIoField, qsIoField;  //TODO: remove last
+    private JRadioButton aButton, bButton;  //TODO: rename these to their proper names
+    private JCheckBox cButton;
+    private JButton dButton;
+    
+    public static void main(String[] args){
+        main t1 = new main();
+        //t1.pack();
+        t1.setVisible(true);
+    }
+    
+    public main(){
+        setTitle("Budget Helper");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);    /*instead of WindowDestroyer*/
+        setSize(WIDTH, HEIGHT);                     /*instead of "t1.pack();" in main*/
+        
+        Container contentPane = getContentPane();
+        contentPane.setLayout(new GridLayout(1,1));
+        
+//SETTINGS PAGE		
+		JPanel settingsPanel = new JPanel();                /*filled row by row, and from left to right*/
+        settingsPanel.setLayout(new GridLayout(2,3));		/*row, col*/
+        //TEXT PANEL
+		JPanel qsTextPanel = new JPanel();
+		//qsTextPanel.setLayout(new BorderLayout());
+		qsIoField = new JTextField(20);				        /*defined private*/
+		qsIoField.setBackground(Color.white);
+        //ADD TO TEXT PANEL
+		qsTextPanel.add(qsIoField, BorderLayout.CENTER);
+		//BUTTON PANEL
+		JPanel qsButtonsPanel = new JPanel();
+		qsButtonsPanel.setLayout(new FlowLayout());
+		
+		aButton = new JRadioButton("Hourly");
+        bButton = new JRadioButton("Fixed Salary");
+        bButton.setSelected(true);
+        
+        cButton = new JCheckBox("Debt");
+        cButton.setSelected(false);
+        
+        dButton = new JButton("Calculate");
+		
+		aButton.addActionListener(this);
+		bButton.addActionListener(this);
+		cButton.addActionListener(this);
+		dButton.addActionListener(this);
+		//ADD TO BUTTON PANEL
+		qsButtonsPanel.add(aButton);
+		qsButtonsPanel.add(bButton);
+		qsButtonsPanel.add(cButton);
+		qsButtonsPanel.add(dButton);
+		
+		
+//ADD TO QUESTION PAGE
+        settingsPanel.add(qsTextPanel);
+        settingsPanel.add(qsButtonsPanel);
+        
+        
+        
+        
+        
+        //rich bitch 4 accounts: checking(car pay/insurance/rent/mortgage/groceries 50%);
+        //chckings 2(play money 30%);
+        //savings(money market 10%) NO CARD
+        //savings 2(10% emergency fund -- after 6 months of living expenses excess can go into savings)
+        
+        
+        
+        
+        
+        
+        //ADD PAGES/PANELS TO CONTENT PANE
+        contentPane.add(settingsPanel);
+    }
+    
+    public void actionPerformed(ActionEvent e){
+        if(e.getActionCommand().equals("Hourly") || e.getActionCommand().equals("Salary")){
+            if(e.getActionCommand().equals("Hourly")){
+            	aButton.setSelected(true);
+            	bButton.setSelected(false);
+            }else{
+                aButton.setSelected(false);
+            	bButton.setSelected(true);
+            }
+        }
+        
+        if(e.getActionCommand().equals("D")){
+        	qsIoField.setText("D");
+        }else 
+            qsIoField.setText("That's an L, try again.");
+    }
+}
 ===============================================================================================================================================================
+NOTE - trying to add a debts list / motnhly payments thing
+
+import java.awt.*;
+import java.util.*;
+import javax.swing.*;
+import java.awt.event.*;
+
+public class main extends JFrame implements ActionListener{
+    //javac *.java
+    //java main.java
+    
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 400;
+    
+    private JTextField hourlyIoField, hoursIoField, fixedIoField, debtIoField, debtPayIoField, qsIoField;  //TODO: remove last
+    private JRadioButton aButton, bButton;  //TODO: rename these to their proper names
+    private JCheckBox cButton;
+    private JButton dButton;
+    
+    public static void main(String[] args){
+        main t1 = new main();
+        //t1.pack();
+        t1.setVisible(true);
+    }
+    
+    public main(){
+        setTitle("Budget Helper");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);    /*instead of WindowDestroyer*/
+        setSize(WIDTH, HEIGHT);                     /*instead of "t1.pack();" in main*/
+        
+        Container contentPane = getContentPane();
+        contentPane.setLayout(new GridLayout(1,1));
+        
+//SETTINGS PAGE		
+		JPanel settingsPanel = new JPanel();                /*filled row by row, and from left to right*/
+        settingsPanel.setLayout(new GridLayout(2,3));		/*row, col*/
+        //TEXT PANEL
+		JPanel qsTextPanel = new JPanel();
+		//qsTextPanel.setLayout(new BorderLayout());
+		qsIoField = new JTextField(20);				        /*defined private*/
+		qsIoField.setBackground(Color.white);
+        //ADD TO TEXT PANEL
+		qsTextPanel.add(qsIoField, BorderLayout.CENTER);
+		//BUTTON PANEL
+		JPanel qsButtonsPanel = new JPanel();
+		qsButtonsPanel.setLayout(new FlowLayout());
+		
+		aButton = new JRadioButton("Hourly");
+        bButton = new JRadioButton("Fixed Salary");
+        bButton.setSelected(true);
+        
+        cButton = new JCheckBox("Debt");
+        cButton.setSelected(false);
+        
+        dButton = new JButton("Calculate");
+		
+		aButton.addActionListener(this);
+		bButton.addActionListener(this);
+		cButton.addActionListener(this);
+		dButton.addActionListener(this);
+		//ADD TO BUTTON PANEL
+		qsButtonsPanel.add(aButton);
+		qsButtonsPanel.add(bButton);
+		qsButtonsPanel.add(cButton);
+		qsButtonsPanel.add(dButton);
+		
+		
+//ADD TO QUESTION PAGE
+        settingsPanel.add(qsTextPanel);
+        settingsPanel.add(qsButtonsPanel);
+        
+        
+        
+        
+        
+        //rich bitch 4 accounts: checking(car pay/insurance/rent/mortgage/groceries 50%);
+        //chckings 2(play money 30%);
+        //savings(money market 10%)
+        //savings 2(10% emergency fund -- after 6 months of living expenses excess can go into savings)
+        
+        
+        
+        
+        
+        
+        //ADD PAGES/PANELS TO CONTENT PANE
+        contentPane.add(settingsPanel);
+    }
+    
+    public void actionPerformed(ActionEvent e){
+        if(e.getActionCommand().equals("Hourly") || e.getActionCommand().equals("Salary")){
+            if(e.getActionCommand().equals("Hourly")){
+            	aButton.setSelected(true);
+            	bButton.setSelected(false);
+            }else{
+                aButton.setSelected(false);
+            	bButton.setSelected(true);
+            }
+        }
+        
+        if(e.getActionCommand().equals("D")){
+        	qsIoField.setText("D");
+        }else 
+            qsIoField.setText("That's an L, try again.");
+    }
+}
 ===============================================================================================================================================================
 NOTE - Original foundation
 
