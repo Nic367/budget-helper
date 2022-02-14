@@ -7,12 +7,10 @@
 ### Files
 * README.md
     * this project description
-* main.java
-    * main project file
-* test_input.txt
-    * the test file I will be using as input in the case that a new file is not being made
-* notes.txt
-    * back up in case something's lost or I mess up and need to back track without committing
+* BudgetProject folder
+    * NetBeans project in its entirety
+* main.java, loginForm.java, sighnupForm.java, notes.txt
+    * these are no longer in use
 
 ### Helpful Links
 * [Google](https://www.google.com)
