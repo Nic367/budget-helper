@@ -176,7 +176,7 @@ public class LoginForm extends javax.swing.JFrame {
 
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
         // TODO add your handling code here:
-        
+        this.dispose();
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed

@@ -1,3 +1,11 @@
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -15,8 +23,10 @@ public class SignupForm extends javax.swing.JFrame {
     public SignupForm() {
         initComponents();
         
+        /**
         jPanelHr.setVisible(false);
         jPanelSal.setVisible(false);
+        */
     }
 
     /**
@@ -40,29 +50,22 @@ public class SignupForm extends javax.swing.JFrame {
         jLabelRePass = new javax.swing.JLabel();
         jPasswordFieldRe = new javax.swing.JPasswordField();
         jCheckBoxShowRePass = new javax.swing.JCheckBox();
-        jRadioSalary = new javax.swing.JRadioButton();
-        jRadioHourly = new javax.swing.JRadioButton();
-        jCheckBoxDebt = new javax.swing.JCheckBox();
         jLabelNumAcc = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
-        jLayeredMoney = new javax.swing.JLayeredPane();
-        jPanelHr = new javax.swing.JPanel();
-        jLabelHourly = new javax.swing.JLabel();
-        jTextPaneHourly = new javax.swing.JTextPane();
-        jTextPaneHours = new javax.swing.JTextPane();
-        jLabelHours = new javax.swing.JLabel();
-        jPanelSal = new javax.swing.JPanel();
-        jLabelSalary = new javax.swing.JLabel();
-        jTextPaneSalary = new javax.swing.JTextPane();
-        jRadioBi = new javax.swing.JRadioButton();
-        jRadioWk = new javax.swing.JRadioButton();
         jButtonCancel = new javax.swing.JButton();
         jButtonCreate = new javax.swing.JButton();
         jLabelLogin = new javax.swing.JLabel();
+        jLabelSalary = new javax.swing.JLabel();
+        listDebts = new java.awt.List();
+        jButtonAddDebtList = new javax.swing.JButton();
+        jTextFieldDebtAmount = new javax.swing.JTextField();
+        jTextFieldDebtName = new javax.swing.JTextField();
+        jLabelDebtName = new javax.swing.JLabel();
+        jLabelDebtAmount = new javax.swing.JLabel();
+        jTextFieldSalary = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Create New Account");
-        setPreferredSize(new java.awt.Dimension(612, 732));
         setResizable(false);
 
         jPanelTop.setBackground(new java.awt.Color(122, 207, 10));
@@ -111,117 +114,8 @@ public class SignupForm extends javax.swing.JFrame {
             }
         });
 
-        jRadioSalary.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioSalary.setText("Salary");
-        jRadioSalary.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioSalaryActionPerformed(evt);
-            }
-        });
-
-        jRadioHourly.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioHourly.setText("Hourly Wage");
-        jRadioHourly.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioHourlyActionPerformed(evt);
-            }
-        });
-
-        jCheckBoxDebt.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBoxDebt.setText("Apply Debt");
-        jCheckBoxDebt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxDebtActionPerformed(evt);
-            }
-        });
-
         jLabelNumAcc.setForeground(new java.awt.Color(255, 255, 255));
         jLabelNumAcc.setText("Number of Bank Accounts");
-
-        jLayeredMoney.setBackground(new java.awt.Color(142, 182, 223));
-        jLayeredMoney.setLayout(new javax.swing.OverlayLayout(jLayeredMoney));
-
-        jPanelHr.setBackground(new java.awt.Color(57, 80, 103));
-
-        jLabelHourly.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelHourly.setText("Hourly Wage");
-
-        jLabelHours.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelHours.setText("Hours Worked");
-
-        javax.swing.GroupLayout jPanelHrLayout = new javax.swing.GroupLayout(jPanelHr);
-        jPanelHr.setLayout(jPanelHrLayout);
-        jPanelHrLayout.setHorizontalGroup(
-            jPanelHrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelHrLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelHourly)
-                .addGap(29, 29, 29)
-                .addComponent(jTextPaneHourly, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(jLabelHours)
-                .addGap(18, 18, 18)
-                .addComponent(jTextPaneHours, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(72, Short.MAX_VALUE))
-        );
-        jPanelHrLayout.setVerticalGroup(
-            jPanelHrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelHrLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelHrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextPaneHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelHours)
-                    .addComponent(jTextPaneHourly, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelHourly))
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
-
-        jLayeredMoney.add(jPanelHr);
-
-        jPanelSal.setBackground(new java.awt.Color(57, 80, 103));
-        jPanelSal.setPreferredSize(new java.awt.Dimension(329, 100));
-
-        jLabelSalary.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelSalary.setText("Gross Salary");
-
-        javax.swing.GroupLayout jPanelSalLayout = new javax.swing.GroupLayout(jPanelSal);
-        jPanelSal.setLayout(jPanelSalLayout);
-        jPanelSalLayout.setHorizontalGroup(
-            jPanelSalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelSalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelSalary)
-                .addGap(33, 33, 33)
-                .addComponent(jTextPaneSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(281, Short.MAX_VALUE))
-        );
-        jPanelSalLayout.setVerticalGroup(
-            jPanelSalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelSalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelSalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelSalary)
-                    .addComponent(jTextPaneSalary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
-
-        jLayeredMoney.add(jPanelSal);
-
-        jRadioBi.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioBi.setText("Bi-weekly pay");
-        jRadioBi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioBiActionPerformed(evt);
-            }
-        });
-
-        jRadioWk.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioWk.setText("Weekly pay");
-        jRadioWk.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioWkActionPerformed(evt);
-            }
-        });
 
         jButtonCancel.setText("Cancel");
         jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -231,6 +125,11 @@ public class SignupForm extends javax.swing.JFrame {
         });
 
         jButtonCreate.setText("Create");
+        jButtonCreate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonCreateMouseClicked(evt);
+            }
+        });
         jButtonCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCreateActionPerformed(evt);
@@ -246,10 +145,36 @@ public class SignupForm extends javax.swing.JFrame {
             }
         });
 
+        jLabelSalary.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelSalary.setText("Gross Salary");
+
+        listDebts.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listDebtsActionPerformed(evt);
+            }
+        });
+
+        jButtonAddDebtList.setText("Add");
+        jButtonAddDebtList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddDebtListActionPerformed(evt);
+            }
+        });
+
+        jLabelDebtName.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelDebtName.setText("Name");
+
+        jLabelDebtAmount.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelDebtAmount.setText("Amount");
+
         javax.swing.GroupLayout jPanelRegisterLayout = new javax.swing.GroupLayout(jPanelRegister);
         jPanelRegister.setLayout(jPanelRegisterLayout);
         jPanelRegisterLayout.setHorizontalGroup(
             jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRegisterLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonAddDebtList)
+                .addGap(200, 200, 200))
             .addGroup(jPanelRegisterLayout.createSequentialGroup()
                 .addGroup(jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelRegisterLayout.createSequentialGroup()
@@ -272,37 +197,46 @@ public class SignupForm extends javax.swing.JFrame {
                         .addGap(182, 182, 182)
                         .addComponent(jLabelLogin))
                     .addGroup(jPanelRegisterLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLayeredMoney, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanelRegisterLayout.createSequentialGroup()
-                                    .addGroup(jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabelRePass, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jRadioHourly))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanelRegisterLayout.createSequentialGroup()
-                                            .addComponent(jPasswordFieldRe, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jCheckBoxShowRePass))
-                                        .addComponent(jRadioSalary)))
-                                .addComponent(jCheckBoxDebt, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelRegisterLayout.createSequentialGroup()
-                                .addComponent(jLabelNumAcc, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanelRegisterLayout.createSequentialGroup()
                         .addGap(136, 136, 136)
                         .addComponent(jButtonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(64, 64, 64)
                         .addComponent(jButtonCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelRegisterLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jRadioBi)
                         .addGap(18, 18, 18)
-                        .addComponent(jRadioWk)))
-                .addContainerGap(131, Short.MAX_VALUE))
+                        .addComponent(listDebts, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelRegisterLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanelRegisterLayout.createSequentialGroup()
+                                        .addGap(63, 63, 63)
+                                        .addComponent(jLabelDebtName))
+                                    .addComponent(jTextFieldDebtName, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldDebtAmount)))
+                            .addGroup(jPanelRegisterLayout.createSequentialGroup()
+                                .addGap(72, 72, 72)
+                                .addComponent(jLabelDebtAmount))))
+                    .addGroup(jPanelRegisterLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelRegisterLayout.createSequentialGroup()
+                                .addGroup(jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRegisterLayout.createSequentialGroup()
+                                        .addComponent(jLabelRePass, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18))
+                                    .addGroup(jPanelRegisterLayout.createSequentialGroup()
+                                        .addComponent(jLabelSalary)
+                                        .addGap(53, 53, 53)))
+                                .addGroup(jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jPasswordFieldRe, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldSalary))
+                                .addGap(18, 18, 18)
+                                .addComponent(jCheckBoxShowRePass))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelRegisterLayout.createSequentialGroup()
+                                .addComponent(jLabelNumAcc, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(140, Short.MAX_VALUE))
         );
         jPanelRegisterLayout.setVerticalGroup(
             jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -325,23 +259,28 @@ public class SignupForm extends javax.swing.JFrame {
                     .addComponent(jLabelRePass, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPasswordFieldRe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCheckBoxShowRePass))
-                .addGap(18, 18, 18)
+                .addGap(19, 19, 19)
                 .addGroup(jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioHourly)
-                    .addComponent(jRadioSalary))
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBoxDebt)
-                .addGap(18, 18, 18)
+                    .addComponent(jLabelSalary)
+                    .addComponent(jTextFieldSalary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55)
                 .addGroup(jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNumAcc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLayeredMoney, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioBi)
-                    .addComponent(jRadioWk))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(listDebts, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelRegisterLayout.createSequentialGroup()
+                        .addComponent(jLabelDebtName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldDebtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelDebtAmount)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldDebtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(14, 14, 14)
+                .addComponent(jButtonAddDebtList)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addGroup(jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -368,36 +307,33 @@ public class SignupForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBoxDebtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxDebtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBoxDebtActionPerformed
-
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
     private void jButtonCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateActionPerformed
         // TODO add your handling code here:
+        Connection con = myConnection.getConnection();
+        PreparedStatement ps;
+        
+        try {
+            ps = con.prepareStatement("INSERT INTO `user`(`username`, `password`, `name`, `salary`) VALUES (?, ?, ?, ?)");
+            ps.setString(1,jTextFieldUser.getText());
+            ps.setString(2,String.valueOf(jPasswordField.getPassword()));
+            ps.setString(3,jTextFieldName.getText());
+            ps.setString(4,jTextFieldSalary.getText());
+            
+            if(ps.executeUpdate() != 0){
+                JOptionPane.showMessageDialog(null, "Account Created");
+            }else{
+                JOptionPane.showMessageDialog(null, "Account Creation Went Wrong");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(SignupForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonCreateActionPerformed
-
-    private void jRadioHourlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioHourlyActionPerformed
-        // TODO add your handling code here:
-        jRadioHourly.setSelected(true);
-        jRadioSalary.setSelected(false);
-        
-        jPanelHr.setVisible(true);
-        jPanelSal.setVisible(false);
-        
-    }//GEN-LAST:event_jRadioHourlyActionPerformed
-
-    private void jRadioSalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioSalaryActionPerformed
-        // TODO add your handling code here:
-        jRadioHourly.setSelected(false);
-        jRadioSalary.setSelected(true);
-        
-        jPanelHr.setVisible(false);
-        jPanelSal.setVisible(true);
-    }//GEN-LAST:event_jRadioSalaryActionPerformed
 
     private void jCheckBoxShowPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxShowPassActionPerformed
         // TODO add your handling code here:
@@ -426,13 +362,19 @@ public class SignupForm extends javax.swing.JFrame {
         this.dispose();//Pops up only other form - og goes away
     }//GEN-LAST:event_jLabelLoginMouseClicked
 
-    private void jRadioBiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioBiActionPerformed
+    private void jButtonAddDebtListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddDebtListActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioBiActionPerformed
+        listDebts.add(jTextFieldDebtName.getText()+"    $"+jTextFieldDebtAmount.getText());
+    }//GEN-LAST:event_jButtonAddDebtListActionPerformed
 
-    private void jRadioWkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioWkActionPerformed
+    private void listDebtsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listDebtsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioWkActionPerformed
+    }//GEN-LAST:event_listDebtsActionPerformed
+
+    private void jButtonCreateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonCreateMouseClicked
+        // TODO add your handling code here:
+        //
+    }//GEN-LAST:event_jButtonCreateMouseClicked
 
     /**
      * @param args the command line arguments
@@ -471,13 +413,13 @@ public class SignupForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAddDebtList;
     private javax.swing.JButton jButtonCancel;
     private javax.swing.JButton jButtonCreate;
-    private javax.swing.JCheckBox jCheckBoxDebt;
     private javax.swing.JCheckBox jCheckBoxShowPass;
     private javax.swing.JCheckBox jCheckBoxShowRePass;
-    private javax.swing.JLabel jLabelHourly;
-    private javax.swing.JLabel jLabelHours;
+    private javax.swing.JLabel jLabelDebtAmount;
+    private javax.swing.JLabel jLabelDebtName;
     private javax.swing.JLabel jLabelLogin;
     private javax.swing.JLabel jLabelName;
     private javax.swing.JLabel jLabelNumAcc;
@@ -485,22 +427,16 @@ public class SignupForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelRePass;
     private javax.swing.JLabel jLabelSalary;
     private javax.swing.JLabel jLabelUser;
-    private javax.swing.JLayeredPane jLayeredMoney;
-    private javax.swing.JPanel jPanelHr;
     private javax.swing.JPanel jPanelRegister;
-    private javax.swing.JPanel jPanelSal;
     private javax.swing.JPanel jPanelTop;
     private javax.swing.JPasswordField jPasswordField;
     private javax.swing.JPasswordField jPasswordFieldRe;
-    private javax.swing.JRadioButton jRadioBi;
-    private javax.swing.JRadioButton jRadioHourly;
-    private javax.swing.JRadioButton jRadioSalary;
-    private javax.swing.JRadioButton jRadioWk;
     private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JTextField jTextFieldDebtAmount;
+    private javax.swing.JTextField jTextFieldDebtName;
     private javax.swing.JTextField jTextFieldName;
+    private javax.swing.JTextField jTextFieldSalary;
     private javax.swing.JTextField jTextFieldUser;
-    private javax.swing.JTextPane jTextPaneHourly;
-    private javax.swing.JTextPane jTextPaneHours;
-    private javax.swing.JTextPane jTextPaneSalary;
+    private java.awt.List listDebts;
     // End of variables declaration//GEN-END:variables
 }
