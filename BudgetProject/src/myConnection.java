@@ -16,7 +16,13 @@ public class myConnection {
     
     public static Connection getConnection(){
         Connection con = null;
-        
+        /*
+        To enter SQL through terminal:
+        nicole@nicole-Lenovo-YOGA-720-12IKB:~$ mysql -u root
+        mysql> use budgetapp;
+        mysql> show tables;
+        mysql> select * from users;
+        */
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/budgetapp","root","");
