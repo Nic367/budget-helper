@@ -18,14 +18,18 @@ public class myConnection {
         Connection con = null;
         /*
         To enter SQL through terminal:
-        nicole@nicole-Lenovo-YOGA-720-12IKB:~$ mysql -u root
+        nicole@nicole-Lenovo-YOGA-720-12IKB:~$ mysql -u root -p
+        Enter password: P4ssword@
+        
         mysql> use budgetapp;
         mysql> show tables;
         mysql> select * from users;
+        
+        Netbeans>Services>budgetappDB>connect (P4ssword@)
         */
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/budgetapp","root","");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/budgetapp","root","P4ssword@");
         }catch(ClassNotFoundException e) {
             System.out.println(e.getMessage());
         } catch (SQLException e) {

@@ -118,6 +118,11 @@ public class SignupForm extends javax.swing.JFrame {
         jLabelNumAcc.setText("Number of Bank Accounts");
 
         jButtonCancel.setText("Cancel");
+        jButtonCancel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonCancelMouseClicked(evt);
+            }
+        });
         jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCancelActionPerformed(evt);
@@ -310,29 +315,49 @@ public class SignupForm extends javax.swing.JFrame {
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
         // TODO add your handling code here:
         this.dispose();
+        //System.exit(0);
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
+    public boolean verifData(){
+        //Name, Username, or Password is empty
+        if(jTextFieldName.getText().equals("") || jTextFieldUser.getText().equals("") 
+                || String.valueOf(jPasswordField.getPassword()).equals("")){
+            JOptionPane.showMessageDialog(null, "One Or More Fields Are Empty");
+            return false;
+        }
+        //Passwords don't match
+        else if(!String.valueOf(jPasswordField.getPassword()).equals(String.valueOf(jPasswordFieldRe.getPassword()))){
+            JOptionPane.showMessageDialog(null, "Passwords Do Not Match");
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
     private void jButtonCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateActionPerformed
         // TODO add your handling code here:
-        Connection con = myConnection.getConnection();
-        PreparedStatement ps;
-        
-        try {
-            ps = con.prepareStatement("INSERT INTO `users`(`username`, `password`, `name`, `salary`) VALUES (?, ?, ?, ?)");
-            ps.setString(1,jTextFieldUser.getText());
-            ps.setString(2,String.valueOf(jPasswordField.getPassword()));
-            ps.setString(3,jTextFieldName.getText());
-            ps.setString(4,jTextFieldSalary.getText());
-            
-            if(ps.executeUpdate() != 0){
-                JOptionPane.showMessageDialog(null, "Account Created");
-            }else{
-                JOptionPane.showMessageDialog(null, "Account Creation Went Wrong");
+        if(verifData()){
+            Connection con = myConnection.getConnection();
+            PreparedStatement ps;
+
+            try {
+                ps = con.prepareStatement("INSERT INTO `users`(`username`, `password`, `name`, `salary`) VALUES (?, ?, ?, ?)");
+                ps.setString(1, jTextFieldUser.getText());
+                ps.setString(2, String.valueOf(jPasswordField.getPassword()));
+                ps.setString(3, jTextFieldName.getText());
+                ps.setString(4, jTextFieldSalary.getText());
+
+                if (ps.executeUpdate() != 0) {
+                    JOptionPane.showMessageDialog(null, "Account Created");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Account Creation Went Wrong");
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(SignupForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(SignupForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_jButtonCreateActionPerformed
 
     private void jCheckBoxShowPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxShowPassActionPerformed
@@ -365,6 +390,8 @@ public class SignupForm extends javax.swing.JFrame {
     private void jButtonAddDebtListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddDebtListActionPerformed
         // TODO add your handling code here:
         listDebts.add(jTextFieldDebtName.getText()+"    $"+jTextFieldDebtAmount.getText());
+        jTextFieldDebtName.setText("");
+        jTextFieldDebtAmount.setText("");
     }//GEN-LAST:event_jButtonAddDebtListActionPerformed
 
     private void listDebtsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listDebtsActionPerformed
@@ -375,6 +402,10 @@ public class SignupForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         //
     }//GEN-LAST:event_jButtonCreateMouseClicked
+
+    private void jButtonCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonCancelMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonCancelMouseClicked
 
     /**
      * @param args the command line arguments
