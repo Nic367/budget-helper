@@ -1,6 +1,7 @@
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,7 +52,7 @@ public class SignupForm extends javax.swing.JFrame {
         jPasswordFieldRe = new javax.swing.JPasswordField();
         jCheckBoxShowRePass = new javax.swing.JCheckBox();
         jLabelNumAcc = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        jSpinnerAccounts = new javax.swing.JSpinner();
         jButtonCancel = new javax.swing.JButton();
         jButtonCreate = new javax.swing.JButton();
         jLabelLogin = new javax.swing.JLabel();
@@ -240,7 +241,7 @@ public class SignupForm extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelRegisterLayout.createSequentialGroup()
                                 .addComponent(jLabelNumAcc, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jSpinnerAccounts, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(140, Short.MAX_VALUE))
         );
         jPanelRegisterLayout.setVerticalGroup(
@@ -271,7 +272,7 @@ public class SignupForm extends javax.swing.JFrame {
                 .addGap(55, 55, 55)
                 .addGroup(jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNumAcc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSpinnerAccounts, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(listDebts, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -321,7 +322,9 @@ public class SignupForm extends javax.swing.JFrame {
     public boolean verifData(){
         //Name, Username, or Password is empty
         if(jTextFieldName.getText().equals("") || jTextFieldUser.getText().equals("") 
-                || String.valueOf(jPasswordField.getPassword()).equals("")){
+                || String.valueOf(jPasswordField.getPassword()).equals("") 
+                || String.valueOf(jPasswordFieldRe.getPassword()).equals("")
+                || jTextFieldSalary.getText().equals("")){
             JOptionPane.showMessageDialog(null, "One Or More Fields Are Empty");
             return false;
         }
@@ -329,7 +332,32 @@ public class SignupForm extends javax.swing.JFrame {
         else if(!String.valueOf(jPasswordField.getPassword()).equals(String.valueOf(jPasswordFieldRe.getPassword()))){
             JOptionPane.showMessageDialog(null, "Passwords Do Not Match");
             return false;
-        }else{
+        }
+        //Salary is not a number
+        else if (!jTextFieldSalary.getText().matches("-?\\d+(\\.\\d+)?")) {
+            JOptionPane.showMessageDialog(null, "Salary Must Be Numeric");
+            return false;
+        }
+        //If user doesnt have 1 or 4 accounts
+        else if (!jSpinnerAccounts.getValue().equals(1) && !jSpinnerAccounts.getValue().equals(4)) {
+            JOptionPane.showMessageDialog(null, "Must Have 1 or 4 Accounts");
+            return false;
+        }else{//Check if username exists
+            Connection con = myConnection.getConnection();
+            PreparedStatement ps;
+            ResultSet rs;
+
+            try {
+                ps = con.prepareStatement("SELECT * FROM `users` WHERE `username` = ?");
+                ps.setString(1, jTextFieldUser.getText());
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(null, "Username Already Exists");
+                    return false;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
             return true;
         }
     }
@@ -341,11 +369,12 @@ public class SignupForm extends javax.swing.JFrame {
             PreparedStatement ps;
 
             try {
-                ps = con.prepareStatement("INSERT INTO `users`(`username`, `password`, `name`, `salary`) VALUES (?, ?, ?, ?)");
+                ps = con.prepareStatement("INSERT INTO `users`(`username`, `password`, `name`, `salary`,`accounts`) VALUES (?, ?, ?, ?, ?)");
                 ps.setString(1, jTextFieldUser.getText());
                 ps.setString(2, String.valueOf(jPasswordField.getPassword()));
                 ps.setString(3, jTextFieldName.getText());
                 ps.setString(4, jTextFieldSalary.getText());
+                ps.setString(5, String.valueOf(jSpinnerAccounts.getValue()));
 
                 if (ps.executeUpdate() != 0) {
                     JOptionPane.showMessageDialog(null, "Account Created");
@@ -462,7 +491,7 @@ public class SignupForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelTop;
     private javax.swing.JPasswordField jPasswordField;
     private javax.swing.JPasswordField jPasswordFieldRe;
-    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JSpinner jSpinnerAccounts;
     private javax.swing.JTextField jTextFieldDebtAmount;
     private javax.swing.JTextField jTextFieldDebtName;
     private javax.swing.JTextField jTextFieldName;
